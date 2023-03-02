@@ -6,7 +6,7 @@ def generate_large_prime():
     Generates a random prime number between 100 and 1000 (inclusive).
     """
     while True:
-        num = random.randint(500, 1000)
+        num = random.randint(100, 256)
         for i in range(2, num):
             if (num % i) == 0:
                 break
@@ -49,32 +49,37 @@ def appendArrayStr(arrStr):
     return ''.join(arrStr)
 
 def encrypt(m, e, n):
-    arr=[]
-    for i in m:
-        arr.append(pow(i, e, n))
-    return arr
-
-
-message = "haithem"
-messageInt=convertToInt(message)
-print ("the message int is ",messageInt)
-
-
-cipherInt = encrypt(messageInt, e, n)
-print ("the cypher text",cipherInt)
-cipherText=convertToStr(cipherInt)
-print ("The cypher text in Table is ", cipherText," The cipher text merged",appendArrayStr(cipherText) )
+    EncryptedArray=[]
+    messageConvertedToInt=convertToInt(m)
+    for i in messageConvertedToInt:
+        EncryptedArray.append(pow(i, e, n))
+    return EncryptedArray
 
 def decrypt(c, d, n):
-    arr=[]
+    plainInt=[]
     for i in c :
-        arr.append(pow(i, d, n))
-    return arr
+        plainInt.append(pow(i, d, n))
+    plainText=''.join(convertToStr(plainInt))
+    return plainText
 
-plainInt = decrypt(cipherInt, d, n)
-print("the plain Int",plainInt)
-plainText=''.join(convertToStr(plainInt))
-print ("the plain text is ",plainText)
+def arrayIntToFullText(arrayInt):
+    arrayCipherText=convertToStr(arrayInt)
+    cipherText=appendArrayStr(arrayCipherText)
+    return cipherText
+
+
+# The information to be sended
+message = "Haithem"
+cipherInt = encrypt(message, e, n)
+print ("the cypher Int :",cipherInt)
+cipherText=arrayIntToFullText(cipherInt)
+print("The cipher text ",cipherText)
+
+
+
+plainText = decrypt(cipherInt, d, n)
+print(plainText)
+
 
 
 
